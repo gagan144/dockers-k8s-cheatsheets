@@ -49,6 +49,14 @@ Kubernetes
 		- Delete deployment and services:
 			kubectl delete deployment <name>
 			kubectl delete service <name>
+
+        - Delete all object at once
+            kubectl delete all --all
+            kubectl delete all --all -n <namespace>
+
+            Or create/delete everything under a namespace
+                kubectl delete namespace <namespace>
+                kubectl create namespace <namespace>
 			
 		- Logs
 			kubectl logs <pod_name>

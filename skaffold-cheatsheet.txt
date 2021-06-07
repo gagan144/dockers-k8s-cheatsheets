@@ -1,0 +1,13 @@
+-----------------------
+Skaffold
+-----------------------
+
+    - Run skaffold:
+        Make sure 'docker client' and 'minikube' are running,
+        Inside project directory with 'skaffold.yaml' file, run:
+
+            (I had to run as Administrator)
+
+            skaffold dev
+
+    - Use minikube ip address to access application
