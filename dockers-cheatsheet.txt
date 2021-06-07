@@ -1,0 +1,87 @@
+----------------------
+Docker
+----------------------
+
+	- Installation:
+		
+		- Docker Desktop Engine configuration:
+			{
+			  "registry-mirrors": [],
+			  "insecure-registries": [],
+			  "debug": false,
+			  "experimental": false,
+			  "features": {
+				"buildkit": false
+			  }
+			}
+		
+
+	- Build image:
+		docker build -t <username/image_name:latest> .
+		docker build -t <username/image_name:latest> -t <username/image_name:tagname> .
+		
+		Specify Dockerfile:
+		    docker build -f <dockerfile> -t <username/image_name:latest> .
+
+	- Run:
+		docker run <image_name/id>
+		docker run --name <containername> -p <host_port>:<container_port> -d <image_name/id>
+		
+		Example:
+			docker run --name mysqltest1 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=root -p 3307:3306 -v D:/Projects/Docker/dockers/mysqltest1/storage/conf.d:/etc/mysql/conf.d -v D:/Projects/Docker/dockers/mysqltest1/storage/mysql_data/:/var/lib/mysql -v D:/Projects/Docker/dockers/mysqltest1/storage/disk1/:/mnt/disk1 -d mysql
+			
+	- Execute program inside running containbe
+		docker exec -it <container_name/id> <program_name>
+		
+		Example:
+			docker exec -it mysqltest1 sh
+			docker exec -it mysqltest1 bash
+			docker exec -it mysqltest1 mysql -uroot -p
+			
+	- Run container by overriding default command
+		docker run -it [--name <container_name>] <image_name/id> <command>
+		docker run -it --name frontendtest frontend_web npm run test
+		docker run -it frontend_web npm run test
+			
+	- Inspect container:
+		docker inspect <container_name/id>
+		
+		
+		
+	- Manage Containers:
+		docker ps
+		docker start <container_name/id>
+		docker stop <container_name/id>
+		docker rm <container_name/id>
+		
+	- Manage Images:
+		List: 		docker images
+		Remove: 	docker rmi <image_name/id>
+		
+	- Transfer Files:
+		docker cp <containerId>:/file/path/within/container /host/path/target
+		
+		
+	- Clean system
+		docker system prune -a
+	
+
+
+
+----------------------
+Docker compose
+----------------------
+
+	- Build using compose (Inside project directory with 'docker-compose.yml' file)
+		docker-compose up
+		docker-compose up --build
+		
+		(* Re-runs the same docker compose if it exists)
+			
+	- Remove (Inside project dir)
+		docker-compose rm
+		
+	- Attach terminal to a running container
+		docker attach <container_name/id>		# Attach to primary process
+	
+		

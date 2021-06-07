@@ -1,0 +1,58 @@
+-----------------------
+Minikube
+-----------------------	
+
+	- Minikube
+		- Check if Hyper-V is enabled in Bios
+			Windows: systeminfo  -> Look for 'Hyper-V Requirements' Section
+	
+		- Enable/Disable Hyper-V for minikube
+			bcdedit /set hypervisorlaunchtype off 
+	
+		- Start (Run as Administrator) - 
+			First time:
+				minikube start --driver=virtualbox
+				minikube start --driver=hyperv
+			
+				
+			Boot up again:
+				minikube start
+			
+		- List profile
+			minikube profile list
+			
+		- Stop 
+			minikube stop
+			
+		- Delete	
+			minikube delete
+			
+		- Check status (Run as Administrator)
+			minikube status
+			
+		- Get minikube IP Address
+			minikube ip
+			
+		- Minikube VM details:
+			username: docker
+			password: tcuser
+			
+		- Run Dashboard
+			minikube dashboard
+			
+		- Access Server
+			minikube ssh
+			minikube ip
+			
+		- Add node
+			minikube node add
+			
+		- List nodes
+			minikube node list
+			
+		- Connect to VM docker-server
+			minikube docker-env
+		
+			Linux: eval $(minikube docker-env)
+
+

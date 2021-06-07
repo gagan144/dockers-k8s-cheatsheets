@@ -1,0 +1,93 @@
+-----------------------
+Kubernetes
+-----------------------	
+
+	- Notes:
+	
+		- Object Types
+			- Pods
+			- Deployments
+			- Services
+				- ClusterIP
+				- NodePort
+					- Only for development
+				- LoadBalancer
+				- Ingress
+			- Secrets	
+		
+	
+	- kubectl
+		
+		- Check version
+			kubectl version
+			
+		- Cluster Info
+			kubectl cluster-info
+			
+		- Apply Objectinto K8s
+			Generically provide k8s responsibilities
+			
+			kubectl apply -f <configfile.yaml>
+			kubectl apply -f <directory>
+			
+		- List object status
+			kubectl get pods|services
+			kubectl get pods -o wide
+			
+		- List machines/nodes in k8s cluster
+			kubectl get node
+			
+		- List docker status
+			kubectl get po -A
+			
+		- Check objects
+			kubectl describe <object_type> <name>
+			
+		- Delete object
+			kubectl delete -f <configfile.yaml>
+			
+		- Delete deployment and services:
+			kubectl delete deployment <name>
+			kubectl delete service <name>
+			
+		- Logs
+			kubectl logs <pod_name>
+			
+		- Shh
+			kubectl exec -it <pod_name> bash
+			
+		- Imperative Commands
+			
+			- Update container image
+				kubectl set image <object_type>/<object_name> <container_name>=<image_name>
+			
+				kubectl set image deployment/client-deployment client=gagan144/udemy_complex_client:1.0.6
+			
+			
+		- Get storage
+			kubectl get storageclass
+			kubectl describe storageclass
+			
+		- List persistent volumes claims
+			kubectl get pvc
+			
+		- List persistent volumes
+			kubectl get pv
+			
+		- Get PV details (Path on HHD)
+			kubectl describe pv <name>
+			
+			
+		- Create secret:
+			kubectl create secret <secret_type:generic|docker-reg|tls> <name> --from-literal <key>=<value>
+			
+		- List secrets
+			kubectl get secrets
+			
+		- Ingress	
+			- Get ingress pods
+				kubectl get pods -n ingress-nginx
+				
+			- Describe
+				kubectl describe ingress ingress-service
+		

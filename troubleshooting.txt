@@ -1,0 +1,17 @@
+
+Hyper-V Troubleshooting
+----------------------------------------
+	- https://minikube.sigs.k8s.io/docs/drivers/hyperv/
+
+	- Enable all Hyper-V features:
+		Open Powershell as Admin:
+			Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+	
+
+
+Error: "Required features are not installed" 
+-----------------------------------------------
+	- https://rants.tech/fix-wslregisterdistribution-failed-with-error-0x80370102/
+	- Try this:
+		bcdedit /set hypervisorlaunchtype auto
+
