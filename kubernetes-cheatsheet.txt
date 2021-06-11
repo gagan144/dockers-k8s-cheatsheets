@@ -95,6 +95,9 @@ Kubernetes
 		- Ingress	
 			- Get ingress pods
 				kubectl get pods -n ingress-nginx
+
+            - Get ingress services:
+                kubectl get services -n ingress-nginx
 				
 			- Describe
 				kubectl describe ingress ingress-service
