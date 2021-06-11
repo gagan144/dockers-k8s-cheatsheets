@@ -23,12 +23,26 @@ Kubernetes
 			
 		- Cluster Info
 			kubectl cluster-info
-			
+
+        - Namespace:
+            https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-organizing-with-namespaces
+
+            Create:
+                kubectl create namespace <namespace>
+
+            Switch namespace:
+                kubectl config set-context --current --namespace=<namespace>
+                kubectl config set-context --current --namespace=default
+
+            Delete:
+                kubectl delete namespace <namespace>
+
+
 		- Apply Objectinto K8s
 			Generically provide k8s responsibilities
 			
-			kubectl apply -f <configfile.yaml>
-			kubectl apply -f <directory>
+			kubectl apply -f <configfile.yaml> [--namespace=<namespace>]
+			kubectl apply -f <directory>    [--namespace=<namespace>]
 			
 		- List object status
 			kubectl get pods|services
@@ -91,6 +105,7 @@ Kubernetes
 			
 		- List secrets
 			kubectl get secrets
+			kubectl get secret -n <namespace>
 			
 		- Ingress	
 			- Get ingress pods
