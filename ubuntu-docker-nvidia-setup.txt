@@ -1,0 +1,95 @@
+----------------------------------
+Ubuntu Docker-Nvidia Setup
+----------------------------------
+
+Ref:
+	https://towardsdatascience.com/fixing-a-broken-ubuntu-gui-5ce3656922f5
+	https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
+	
+	
+	https://www.cyberciti.biz/faq/ubuntu-linux-install-nvidia-driver-latest-proprietary-driver/
+	https://github.com/NVIDIA/nvidia-docker
+	https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
+	https://docs.docker.com/engine/install/debian/
+	
+
+
+- Install nvidia drivers:
+
+	# Via GUI (---RECOMMENDED----)
+		Go to Software & updates and install Proprietary drivers of your graphics card
+
+	# Via Command line
+		ubuntu-drivers devices
+		ubuntu-drivers autoinstall
+	
+	- Restart
+		sudo reboot
+	
+	- Test
+		nvidia-smi
+		nvidia-smi -a
+		nvidia-smi -L
+		
+	# Trobleshooting; If GUI doesn;t work:
+		https://towardsdatascience.com/fixing-a-broken-ubuntu-gui-5ce3656922f5
+	
+
+- Setting up Docker
+	curl https://get.docker.com | sh && sudo systemctl --now enable docker
+	
+	Add user to docker group
+		sudo groupadd docker
+		sudo usermod -aG docker $USER
+		
+	Test:
+		docker run hello-world
+		
+		
+- Setting up NVIDIA Container Toolkit
+	- Update repo
+		distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+		
+	- Install the nvidia-docker2 package (and dependencies) after updating the package listing
+		sudo apt-get update
+		sudo apt-get install -y nvidia-docker2
+		
+		# Restart docker
+		sudo systemctl restart docker
+	
+	- Test: At this point, a working setup can be tested by running a base CUDA container:
+		# nvidia/cuda:11.0-base
+		sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
+		
+		# tensorflow GPU container
+		docker run -it --runtime=nvidia tensorflow/tensorflow:latest-gpu python
+		
+		# Tensorflow Jupter
+		docker run -it --rm --gpus all -v $(realpath ~/notebooks):/tf/notebooks -p 8888:8888 tensorflow/tensorflow:latest-jupyter
+		docker run -it --rm --gpus all -p 8888:8888 tensorflow/tensorflow:latest-jupyter
+		docker run --gpus all -p 8888:8888 -d tensorflow/tensorflow:2.4.2-gpu-jupyter
+		
+		# Check GPU from tensorflow
+		https://stackoverflow.com/questions/38559755/how-to-get-current-available-gpus-in-tensorflow
+		
+			import tensorflow as tf
+			from tensorflow.python.client import device_lib	
+		
+			tf.test.is_gpu_available()
+			
+			tf.test.gpu_device_name()
+			
+			device_lib.list_local_devices()
+		
+			
+			gpus = tf.config.experimental.list_physical_devices('GPU')
+			for gpu in gpus:
+				print("Name:", gpu.name, "  Type:", gpu.device_type)
+				
+				
+			visible_devices = tf.config.get_visible_devices()
+			for devices in visible_devices:
+			  print(devices)
+
+	
+	
