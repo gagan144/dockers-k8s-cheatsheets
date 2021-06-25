@@ -67,7 +67,7 @@ Ref:
 		# Tensorflow Jupter
 		docker run -it --rm --gpus all -v $(realpath ~/notebooks):/tf/notebooks -p 8888:8888 tensorflow/tensorflow:latest-jupyter
 		docker run -it --rm --gpus all -p 8888:8888 tensorflow/tensorflow:latest-jupyter
-		docker run --gpus all -p 8888:8888 -d tensorflow/tensorflow:2.4.2-gpu-jupyter
+		docker run --gpus all -e JUPYTER_TOKEN=admin -p 8888:8888 -d tensorflow/tensorflow:2.4.2-gpu-jupyter
 		
 		# Check GPU from tensorflow
 		https://stackoverflow.com/questions/38559755/how-to-get-current-available-gpus-in-tensorflow
