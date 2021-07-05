@@ -1,3 +1,42 @@
+WSL2 - Error: "Required features are not installed" 
+-------------------------------------------------------
+	Ref:
+		https://docs.microsoft.com/en-us/windows/wsl/install-win10
+		https://github.com/microsoft/WSL/issues/4626
+		https://stackoverflow.com/questions/50126279/cant-start-docker-on-windows
+
+	1. Enable Windows Features:
+		Open 'Turn Windows features on and off' and enable following services
+			- Hyper-V (All)
+			- Virtual Machine Platform
+			- Windows Hypervisor Platform
+			- Windows subsystem for Linux
+	
+	2. Change 'Exploit protection settings' for Hyper-V 'vmcomput':
+		- Open "Window Security"
+		- Open "App & Browser control"
+		- Click "Exploit protection settings" at the bottom
+		- Switch to "Program settings" tab
+		- Locate "C:\WINDOWS\System32\vmcompute.exe" in the list and expand it
+		- Click "Edit"
+		- Scroll down to "Code flow guard (CFG)" and UNCHECK "Override system settings"
+		- Restart PC
+		- Start vmcompute from powershell "net start vmcompute" or from windows service manager.
+		
+	3. Check WSL-2
+		- Try changing version of one of the distribution
+			wsl --set-version <distro-name> 2
+	
+	4. Set WSL-2 as default
+		wsl --set-default-version 2
+	
+	Other references:
+		- https://rants.tech/fix-wslregisterdistribution-failed-with-error-0x80370102/
+		- Try this:
+			bcdedit
+			bcdedit /set hypervisorlaunchtype auto
+			bcdedit /set hypervisorlaunchtype auto start
+
 
 Hyper-V Troubleshooting
 ----------------------------------------
@@ -7,11 +46,3 @@ Hyper-V Troubleshooting
 		Open Powershell as Admin:
 			Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 	
-
-
-Error: "Required features are not installed" 
------------------------------------------------
-	- https://rants.tech/fix-wslregisterdistribution-failed-with-error-0x80370102/
-	- Try this:
-		bcdedit /set hypervisorlaunchtype auto
-
